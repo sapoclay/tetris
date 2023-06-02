@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TETAS demo</title>
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+      h1, p {
+        text-align: center;
+      }
+      pre {
+        margin: 40px auto;
+        width: 150ch;
+        height: 50em;
+        line-height: 2em;
+        background: #eee;
+        border: 2px solid #800;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>TETAS (Tetris Es Tan Asombrosamente Simple) demo</h1>
+    <p>
+      <a href="http://entreunosyceros.net">Tetas Web</a>
+    </p>
+   <!-- <pre id="code"></pre>-->
+    <script>
+      $.get('tis.min.js', function(code, textStatus, xhr) {
+        // Estos son en realidad personajes, no bytes. Pero no usamos ningún UNICODE.
+        var size = code.length;
+        var target = 4096;
+        $('#size').text(size);
+        $('#delta').text(
+            Math.abs(size - target) + ' bytes ' +
+            (size > target ? 'over' : 'under') + ' target')
+            .css('color', size > target ? '#800' : '#080');
+        $('#code').text(code);
+      }, 'text');
+    </script>
+    <script src="tis.js"></script>
+    <script>
+      var konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+      for (i in konamiCode) {
+        // http://stackoverflow.com/questions/961532/firing-a-keyboard-event-in-javascript
+        var e = document.createEvent('Event');
+        e.initEvent('keydown', true, true);
+        e.keyCode = konamiCode[i];
+        document.dispatchEvent(e);
+      }
+    </script>
+  </body>
+</html>
